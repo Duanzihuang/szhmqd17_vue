@@ -47,11 +47,13 @@ import "./statics/site/css/style.css"
 //导入定义好的组件
 import goodslist from './components/goods/goodslist'
 import goodsinfo from './components/goods/goodsinfo'
+import shopcart from './components/shopcart/shopcart'
 const router = new VueRouter({
     routes:[
         {path:'/',redirect:'/site/goodslist'},
         {path:'/site/goodslist',component:goodslist},
-        {path:'/site/goodsinfo/:goodsId',component:goodsinfo}
+        {path:'/site/goodsinfo/:goodsId',component:goodsinfo},
+        {path:'/site/shopcart',component:shopcart}
     ]
 })
 

@@ -23,11 +23,11 @@
                             <a>退出</a>
                             <strong>|</strong>
                         </span>
-                        <a href="" class="">
+                        <router-link to="/site/shopcart" class="">
                             <i  id="shoppingCartCount" class="iconfont icon-cart"></i>购物车(
                             <span>
                                 <span>{{$store.getters.getTotalGoodsCount}}</span>
-                            </span>)</a>
+                            </span>)</router-link>
                     </div>
                 </div>
             </div>
