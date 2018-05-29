@@ -46,7 +46,7 @@ export const getLocalGoodsObj = () => {
     const localGoodsObj = getLocalGoodsObj()
 
     /**
-     * localGoodsObj ==> {"90":1,"92":2,"94":3}
+     * localGoodsObj ==> {"90":1,"92":2,"94":5}  {goodsId:94,count:2}
      */
     if(localGoodsObj[goods.goodsId]){
         localGoodsObj[goods.goodsId]+=goods.count
@@ -58,4 +58,20 @@ export const getLocalGoodsObj = () => {
 
      //别忘记把最新统计出来的商品总数量返回给Vuex的buyCount，这样我们App.vue中的总数量才会改变
      return getTotalLocalCount()
+ }
+
+ /**
+  * 修改localStorage中商品的数量
+  * goods === > {goodsId:87,count:3}
+  */
+ export function updateLocalGoods(goods){
+    const localGoodsObj = getLocalGoodsObj()
+
+    //直接修改goodsId对应的数量
+    localGoodsObj[goods.goodsId] = goods.count
+
+    localStorage.setItem(KEY,JSON.stringify(localGoodsObj))
+
+    //别忘记把最新统计出来的商品总数量返回给Vuex的buyCount，这样我们App.vue中的总数量才会改变
+    return getTotalLocalCount()
  }

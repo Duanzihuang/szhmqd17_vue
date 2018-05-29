@@ -69,7 +69,9 @@
                                         </div>
                                     </td>
                                     <td width="84" align="left">{{item.sell_price}}</td>
-                                    <td width="104" align="center">{{item.buycount}}</td>
+                                    <td width="104" align="center">
+                                        <inputnumber :goodsCount="item.buycount" :goodsId="item.id" @goodsCountChange="getChangeGoods"></inputnumber>
+                                    </td>
                                     <td width="104" align="left">{{item.sell_price * item.buycount}}</td>
                                     <td width="54" align="center">操作</td>
                                 </tr>
@@ -123,11 +125,17 @@
 <script>
     import { getLocalGoodsObj } from '../../common/localStorageHelper'
 
+    //导入子组件
+    import inputnumber from '../subcomponents/inputnumber'
+
     export default {
         data() {
             return {
                 goodsList: []
             }
+        },
+        components:{
+            inputnumber
         },
         computed:{
             //计算总数量
@@ -151,7 +159,7 @@
                 })
 
                 return totalAmount
-            },
+            }
         },
         created() {
             this.getGoodsListData()
@@ -180,6 +188,18 @@
 
                     this.goodsList = response.data.message
                 })
+            },
+            //获取子组件改变之后的商品数据 {goodsId:87,count:3}
+            getChangeGoods(goods){
+                //1.更改this.goodsList中对应商品id的buycount的值
+                this.goodsList.forEach(item=>{
+                    if(item.id == goods.goodsId){
+                        item.buycount = goods.count
+                    }
+                })
+
+                //2.调用Vuex的updateGoods方法
+                this.$store.commit('updateGoods',goods)
             }
         }
     }

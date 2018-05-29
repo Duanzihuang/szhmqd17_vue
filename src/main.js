@@ -61,6 +61,7 @@ const router = new VueRouter({
 //按需导入localStorage中的方法【按需导入必须要有{}】
 import {
     addLocalGoods,
+    updateLocalGoods,
     getTotalLocalCount
 } from './common/localStorageHelper'
 const store = new Vuex.Store({
@@ -80,6 +81,10 @@ const store = new Vuex.Store({
         // goods的格式如下 {goodsId:88,count:3}
         addGoods(state,goods){
             state.buyCount = addLocalGoods(goods)
+        },
+        // 修改商品数量 goods的格式如下 {goodsId:87,count:3}
+        updateGoods(state,goods){
+            state.buyCount = updateLocalGoods(goods)
         }
     }
 })
