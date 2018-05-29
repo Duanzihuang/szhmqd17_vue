@@ -103,8 +103,8 @@
                     <!--购物车底部-->
                     <div class="cart-foot clearfix">
                         <div class="right-box">
-                            <button class="button" onclick="javascript:location.href='/index.html';">继续购物</button>
-                            <button class="submit" onclick="formSubmit(this, '/', '/shopping.html');">立即结算</button>
+                            <button class="button" @click="continueBuy">继续购物</button>
+                            <button class="submit" @click="goToOrder">提交订单</button>
                         </div>
                     </div>
                     <!--购物车底部-->
@@ -209,19 +209,46 @@
                 }).then(() => {
                     //根据id查找到该条数据在数组中的索引值
                     //参考:http://es6.ruanyifeng.com/#docs/array#%E6%95%B0%E7%BB%84%E5%AE%9E%E4%BE%8B%E7%9A%84-find-%E5%92%8C-findIndex
-                    const index = this.goodsList.findIndex(item=>{
+                    const index = this.goodsList.findIndex(item => {
                         return item.id == goodsId
                     })
 
                     //删除索引对应的数据
-                    this.goodsList.splice(index,1)
+                    this.goodsList.splice(index, 1)
 
                     //调用Vuex中根据id删除商品的方法
-                    this.$store.commit('deleteGoodsById',goodsId)
+                    this.$store.commit('deleteGoodsById', goodsId)
                 }).catch(() => {
                     console.log("...取消了...")
                 });
+            },
+            //继续购物
+            continueBuy() {
+                this.$router.push({ path: '/site/goodslist' })
+            },
+            //提交订单
+            goToOrder() {
+                const tempArray = []
+
+                this.goodsList.forEach(item => {
+                    if (item.isSelected) {
+                        tempArray.push(item.id)
+                    }
+                })
+
+                if (tempArray.length == 0) {
+                    this.$message({
+                        message: '请至少选择一件商品来下单',
+                        type: 'warning'
+                    });
+
+                    return
+                }
+
+                //通过编程式导航，跳转到订单页面
+                this.$router.push({path:`/site/order/${tempArray.join(',')}`})
             }
+
         }
     }
 </script>
