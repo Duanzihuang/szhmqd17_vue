@@ -56,11 +56,8 @@
                                 </tr>
                                 <tr v-for="item in goodsList" :key="item.id">
                                     <td width="48" align="center">
-                                            <el-switch
-                                                v-model="item.isSelected"
-                                                active-color="#409eff"
-                                                inactive-color="#555555">
-                                          </el-switch>
+                                        <el-switch v-model="item.isSelected" active-color="#409eff" inactive-color="#555555">
+                                        </el-switch>
                                     </td>
                                     <td align="left" colspan="2">
                                         <div class="shopInfo">
@@ -73,7 +70,9 @@
                                         <inputnumber :goodsCount="item.buycount" :goodsId="item.id" @goodsCountChange="getChangeGoods"></inputnumber>
                                     </td>
                                     <td width="104" align="left">{{item.sell_price * item.buycount}}</td>
-                                    <td width="54" align="center">操作</td>
+                                    <td width="54" align="center">
+                                        <a href="javascript:void(0)" @click="deleteGoodsById(item.id)">删除</a>
+                                    </td>
                                 </tr>
                                 <tr v-if="goodsList.length == 0">
                                     <td colspan="10">
@@ -134,27 +133,27 @@
                 goodsList: []
             }
         },
-        components:{
+        components: {
             inputnumber
         },
-        computed:{
+        computed: {
             //计算总数量
-            getTotalCount(){
+            getTotalCount() {
                 let totalCount = 0
-                this.goodsList.forEach(item=>{
-                    if(item.isSelected){
-                        totalCount+=item.buycount
+                this.goodsList.forEach(item => {
+                    if (item.isSelected) {
+                        totalCount += item.buycount
                     }
                 })
 
                 return totalCount
             },
             //计算总金额
-            getTotalAmount(){
+            getTotalAmount() {
                 let totalAmount = 0
-                this.goodsList.forEach(item=>{
-                    if(item.isSelected){
-                        totalAmount+=item.buycount * item.sell_price
+                this.goodsList.forEach(item => {
+                    if (item.isSelected) {
+                        totalAmount += item.buycount * item.sell_price
                     }
                 })
 
@@ -190,16 +189,38 @@
                 })
             },
             //获取子组件改变之后的商品数据 {goodsId:87,count:3}
-            getChangeGoods(goods){
+            getChangeGoods(goods) {
                 //1.更改this.goodsList中对应商品id的buycount的值
-                this.goodsList.forEach(item=>{
-                    if(item.id == goods.goodsId){
+                this.goodsList.forEach(item => {
+                    if (item.id == goods.goodsId) {
                         item.buycount = goods.count
                     }
                 })
 
                 //2.调用Vuex的updateGoods方法
-                this.$store.commit('updateGoods',goods)
+                this.$store.commit('updateGoods', goods)
+            },
+            //根据id删除商品
+            deleteGoodsById(goodsId) {
+                this.$confirm(`是否删除id为 ${goodsId} 的商品吗?`, '提示', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                    type: 'warning'
+                }).then(() => {
+                    //根据id查找到该条数据在数组中的索引值
+                    //参考:http://es6.ruanyifeng.com/#docs/array#%E6%95%B0%E7%BB%84%E5%AE%9E%E4%BE%8B%E7%9A%84-find-%E5%92%8C-findIndex
+                    const index = this.goodsList.findIndex(item=>{
+                        return item.id == goodsId
+                    })
+
+                    //删除索引对应的数据
+                    this.goodsList.splice(index,1)
+
+                    //调用Vuex中根据id删除商品的方法
+                    this.$store.commit('deleteGoodsById',goodsId)
+                }).catch(() => {
+                    console.log("...取消了...")
+                });
             }
         }
     }

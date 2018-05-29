@@ -75,3 +75,17 @@ export const getLocalGoodsObj = () => {
     //别忘记把最新统计出来的商品总数量返回给Vuex的buyCount，这样我们App.vue中的总数量才会改变
     return getTotalLocalCount()
  }
+
+ /**
+  * 根据商品id，删除本地的商品信息
+  */
+ export const deleteLocalGoodsById = (goodsId) => {
+    const localGoodsObj = getLocalGoodsObj()
+
+    delete localGoodsObj[goodsId]
+
+    localStorage.setItem(KEY,JSON.stringify(localGoodsObj))
+
+    //别忘记把最新统计出来的商品总数量返回给Vuex的buyCount，这样我们App.vue中的总数量才会改变
+    return getTotalLocalCount()
+ }

@@ -62,6 +62,7 @@ const router = new VueRouter({
 import {
     addLocalGoods,
     updateLocalGoods,
+    deleteLocalGoodsById,
     getTotalLocalCount
 } from './common/localStorageHelper'
 const store = new Vuex.Store({
@@ -85,6 +86,10 @@ const store = new Vuex.Store({
         // 修改商品数量 goods的格式如下 {goodsId:87,count:3}
         updateGoods(state,goods){
             state.buyCount = updateLocalGoods(goods)
+        },
+        // 根据id删除对应的商品信息
+        deleteGoodsById(state,goodsId){
+            state.buyCount = deleteLocalGoodsById(goodsId)
         }
     }
 })
