@@ -248,7 +248,6 @@
                 //通过编程式导航，跳转到订单页面
                 this.$router.push({path:`/site/order/${tempArray.join(',')}`})
             }
-
         }
     }
 </script>

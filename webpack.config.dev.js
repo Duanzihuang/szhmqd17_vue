@@ -30,6 +30,7 @@ module.exports = {
     resolve: {
         extensions: [".vue", ".js", ".json"]
     },
+    // devtool: '#cheap-module-eval-source-map',
     plugins: [
         new VueLoaderPlugin(),
         new HtmlWebpackPlugin({

@@ -234,8 +234,12 @@
             this.getGoodsInfoData()
             this.getCommentListData()
         },
+        beforeUpdate(){
+            // console.log(`goodsinfo beforeUpdate`)
+        },
         //当我们模型数据发生了更改，并且视图渲染完毕
         updated() {
+            // console.log(`goodsinfo updated`)
             $('#magnifier1').imgzoon({ magnifier: '#magnifier1' });
 
             //不要在updated中更改模型的值，否则很危险

@@ -125,6 +125,26 @@
             this.getGoodsData()
             this.getGoodsGroupData()
         },
+        /**
+        beforeMount(){
+            console.log(`goodslist beforeMount`)
+        },
+        mounted(){
+            console.log(`goodslist mounted`)
+        },
+        beforeUpdate(){
+            console.log(`goodslist beforeUpdate`)
+        },
+        updated(){
+            console.log(`goodslist updated`)
+        },
+        beforeDestroy(){
+            console.log(`goodslist beforeDestroy`)
+        },
+        destroyed(){
+            console.log(`goodslist destroyed`)
+        },
+        **/
         methods:{
             //获取购物商城头部所需的数据
             getGoodsData(){
