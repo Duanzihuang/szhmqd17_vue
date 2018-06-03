@@ -105,7 +105,7 @@
             this.getOrderInfoData()
             this.getOrderStatus()
         },
-        beforeDestroy(){
+        beforeDestroy() {
             clearInterval(this.interval)
         },
         methods: {
@@ -130,7 +130,7 @@
                             this.$router.push({ path: '/site/paySuccess' })
                         }
                     })
-                },3000)
+                }, 3000)
             }
         },
         mounted() {
@@ -143,12 +143,14 @@
             **/
 
             //图片logo
-            $('#container2').erweima({
-                mode: 4,
-                mSize: 35,
-                image: $("#imgLogo")[0],
-                text: `http://47.106.148.205:8899/site/validate/pay/alipay/${this.$route.params.orderId}`
-            });
+            setTimeout(() => {
+                $('#container2').erweima({
+                    mode: 4,
+                    mSize: 35,
+                    image: $("#imgLogo")[0],
+                    text: `http://47.106.148.205:8899/site/validate/pay/alipay/${this.$route.params.orderId}`
+                });
+            }, 200);
         }
     }
 </script>
